@@ -11,7 +11,7 @@ Two versions will be created. One will be WiFi and the other will be LTE-M.
 - must have a way to replace batteries.
 
 ### Messages
-One update per hour.
+- one message per hour
 
 ### Size
 Puck sized.
@@ -19,7 +19,7 @@ Puck sized.
 - 1" thick
 
 ### Price
-$100
+$35 in BOM costs for a production run of 1000 pieces.
 
 To compete with
 - https://tempstick.com/: $290
@@ -28,7 +28,7 @@ To compete with
 Both those have more extensive features.
 
 ### Temperature Range
-0 to 40 degrees Celsius
+-20 to 40 degrees Celsius
 
 ### Ingress Protection
 IP 52 (probably will need IP 54 since I don't think 52 is common)
@@ -46,6 +46,10 @@ Battery pack location can be IP42 since it must be removable.
 - View the latest temperature
 - view a previous temperatures (by default store one month of data on phone, but allow user to change)
 - Allow users to submit feedback through app
+- Will not allow behaviour change or control of device.
+
+### Other Control/Interface functions
+Data can be retrieved and ingested into other platforms for use outside of created ecosystem. Can test this by making sure it works with Home Assistant (they have MQTT things).
 
 ### Connection and Data Privacy
 - MQTT will be used and secured using standard methods
