@@ -22,8 +22,9 @@ Puck sized.
 $35 in BOM costs for a production run of 1000 pieces.
 
 To compete with
-- https://tempstick.com/: $290
+- https://tempstick.com/: $140
 - https://tempcube.io/: $700
+- https://www.thermoworks.com/node/: $75
 
 Both those have more extensive features.
 
@@ -55,6 +56,7 @@ Data can be retrieved and ingested into other platforms for use outside of creat
 - MQTT will be used and secured using standard methods
 - the physical device will be needed to connect to the server (via QR code or similar)
 - MQTT relay server will be made available throughout lifetime at no additional cost (will investigate cost furter)
+  - 
 
 ### Warranty
 1 year Warranty
