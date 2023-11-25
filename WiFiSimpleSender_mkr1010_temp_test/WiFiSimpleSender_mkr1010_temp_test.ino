@@ -29,17 +29,17 @@ char pass[] = SECRET_PASS;    // your network password (use for WPA, or use as k
 // To connect with SSL/TLS:
 // 1) Change WiFiClient to WiFiSSLClient.
 // 2) Change port value from 1883 to 8883.
-// 3) Change broker value to a server with a known SSL/TLS root certificate 
+// 3) Change broker value to a server with a known SSL/TLS root certificate
 //    flashed in the WiFi module.
 
-WiFiClient wifiClient;
+WiFiSSLClient wifiClient;
 MqttClient mqttClient(wifiClient);
 
-const char broker[] = "test.mosquitto.org";
-int        port     = 1883;
+const char broker[] = "******";
+int        port     = 8883;
 const char topic[]  = "Tempdata";
 
-const long interval = 300000;
+const long interval = 15000;
 unsigned long previousMillis = 0;
 
 float SERIESRESISTOR = 9.87;
@@ -70,10 +70,12 @@ void setup() {
 
   // You can provide a unique client ID, if not set the library uses Arduino-millis()
   // Each client must have a unique client ID
-  // mqttClient.setId("clientId");
+  mqttClient.setId("pump-house");
 
   // You can provide a username and password for authentication
-  // mqttClient.setUsernamePassword("username", "password");
+  mqttClient.setUsernamePassword("****", "****");
+
+  mqttClient.setConnectionTimeout(30000);
 
   Serial.print("Attempting to connect to the MQTT broker: ");
   Serial.println(broker);
@@ -100,16 +102,16 @@ void loop() {
   // to avoid having delays in loop, we'll use the strategy from BlinkWithoutDelay
   // see: File -> Examples -> 02.Digital -> BlinkWithoutDelay for more info
   unsigned long currentMillis = millis();
-  
+
   if (currentMillis - previousMillis >= interval) {
     /*Read analog outputof NTC module,
      i.e the voltage across the thermistor */
     float average = ((float)analogRead(A0) / 4095.0) * 3.3;
-    
+
     average = (average * SERIESRESISTOR) / (3.3 - average);
-    Serial.print("Thermistor resistance "); 
+    Serial.print("Thermistor resistance ");
     Serial.println(average);
-    
+
     float steinhart;
     steinhart = average / THERMISTORNOMINAL;     // (R/Ro)
     steinhart = log(steinhart);                  // ln(R/Ro)
@@ -117,11 +119,11 @@ void loop() {
     steinhart += 1.0 / (TEMPERATURENOMINAL + 273.15); // + (1/To)
     steinhart = 1.0 / steinhart;                 // Invert
     steinhart -= 273.15;                         // convert absolute temp to C
-    
-    Serial.print("Temperature "); 
+
+    Serial.print("Temperature ");
     Serial.print(steinhart);
     Serial.println(" *C");
-    
+
     // save the last time a message was sent
     previousMillis = currentMillis;
 
