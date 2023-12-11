@@ -35,13 +35,17 @@ char pass[] = SECRET_PASS;    // your network password (use for WPA, or use as k
 WiFiSSLClient wifiClient;
 MqttClient mqttClient(wifiClient);
 
-const char broker[] = "******";
+// replace the stars with your broker
+const char broker[] = "*******";
 int        port     = 8883;
-const char topic[]  = "Tempdata";
+
+// replace the stars with your topic
+const char topic[]  = "*******";
 
 const long interval = 15000;
 unsigned long previousMillis = 0;
 
+// should be tested and changed to your particular resistor
 float SERIESRESISTOR = 9.87;
 
 float TEMPERATURENOMINAL = 25.0;
@@ -50,6 +54,7 @@ float BCOEFFICIENT = 3540.0;
 
 float thermistor = 0.0;
 
+// this could be calibrated too
 float THERMISTORNOMINAL = 10;
 
 void setup() {
@@ -69,11 +74,11 @@ void setup() {
   Serial.println();
 
   // You can provide a unique client ID, if not set the library uses Arduino-millis()
-  // Each client must have a unique client ID
-  mqttClient.setId("pump-house");
+  // Each client must have a unique client ID replace the stars with yours
+  mqttClient.setId("*****");
 
   // You can provide a username and password for authentication
-  mqttClient.setUsernamePassword("****", "****");
+  mqttClient.setUsernamePassword("username", "password");
 
   mqttClient.setConnectionTimeout(30000);
 
@@ -104,13 +109,22 @@ void loop() {
   unsigned long currentMillis = millis();
 
   if (currentMillis - previousMillis >= interval) {
+
+    // check if we are still connected to the server
+    // and reconnect if we are not
+    if (!mqttClient.connected())
+    {
+      if(mqttClient.connect(broker, port))
+      {
+        Serial.println("reconnected");
+      }
+    }
+    
     /*Read analog outputof NTC module,
      i.e the voltage across the thermistor */
     float average = ((float)analogRead(A0) / 4095.0) * 3.3;
 
     average = (average * SERIESRESISTOR) / (3.3 - average);
-    Serial.print("Thermistor resistance ");
-    Serial.println(average);
 
     float steinhart;
     steinhart = average / THERMISTORNOMINAL;     // (R/Ro)
@@ -118,26 +132,15 @@ void loop() {
     steinhart /= BCOEFFICIENT;                   // 1/B * ln(R/Ro)
     steinhart += 1.0 / (TEMPERATURENOMINAL + 273.15); // + (1/To)
     steinhart = 1.0 / steinhart;                 // Invert
-    steinhart -= 273.15;                         // convert absolute temp to C
-
-    Serial.print("Temperature ");
-    Serial.print(steinhart);
-    Serial.println(" *C");
+    steinhart -= 273.15;                         // convert absolute temp to 
 
     // save the last time a message was sent
     previousMillis = currentMillis;
-
-    Serial.print("Sending message to topic: ");
-    Serial.println(topic);
-    Serial.print("The temperature is");
-    Serial.println(thermistor);
 
     // send message, the Print interface can be used to set the message contents
     mqttClient.beginMessage(topic);
     mqttClient.print("The temperature is ");
     mqttClient.print(steinhart);
     mqttClient.endMessage();
-
-    Serial.println();
   }
 }

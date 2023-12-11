@@ -3,6 +3,8 @@ This is a repository to hold all code and KiCAD design files for a 'temperature 
 
 Two versions will be created. One will be WiFi and the other will be LTE-M.
 
+Currently the two sections of code is for the Arduino MKR 1400 (gsm-arduino-code) and the Arduino MKR 1010 (wifi-arduino-code). Development will focus on creating an Android app and refining the prototype to work with it. 
+
 # Project Constraints
 ## WiFi Versions
 ### Battery Life
@@ -56,7 +58,7 @@ Data can be retrieved and ingested into other platforms for use outside of creat
 - MQTT will be used and secured using standard methods
 - the physical device will be needed to connect to the server (via QR code or similar)
 - MQTT relay server will be made available throughout lifetime at no additional cost (will investigate cost furter)
-  - 
+  -
 
 ### Warranty
 1 year Warranty
