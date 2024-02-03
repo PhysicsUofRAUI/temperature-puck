@@ -1,2 +1,6 @@
 kivy_venv/
 config.py
+.buildozer/
+buildozer.spec
+__pycache___
+bin/
