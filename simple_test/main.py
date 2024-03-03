@@ -18,7 +18,7 @@ class MQTTApp(App):
         self.broker_address = MQTT_BROKER_ADDRESS
         self.broker_port = MQTT_BROKER_PORT
         self.topics = MQTT_TOPICS
-        self.client = mqtt.Client()
+        self.client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 
         # Set up MQTT callbacks
         self.client.on_connect = self.on_connect
@@ -32,7 +32,7 @@ class MQTTApp(App):
 
         return self.layout
 
-    def on_connect(self, client, userdata, flags, rc):
+    def on_connect(self, client, userdata, flags, rc, properties):
         if rc == 0:
             print("Connected to MQTT broker")
             # Subscribe to the topic upon successful connection
