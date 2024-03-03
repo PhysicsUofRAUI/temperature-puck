@@ -2,6 +2,6 @@ kivy_venv/
 config.py
 .buildozer/
 buildozer.spec
-__pycache___/
+*_pycache_*
 bin/
 kivy_app_logcat*
