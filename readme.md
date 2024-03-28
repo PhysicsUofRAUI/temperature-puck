@@ -13,7 +13,9 @@ Currently the two sections of code is for the Arduino MKR 1400 (gsm-arduino-code
 - must have a way to replace batteries.
 
 ### Messages
-- one message per hour
+Configurable. The user will enter credentials on startup and during that process they will specify a high and low temperature, as well as how often they want a heartbeat sent to them via email.
+
+May look into future integration with common smart home systems such as Google Home, Apple whatever it is, and Home Assitant.
 
 ### Size
 Puck sized.
@@ -43,22 +45,6 @@ Battery pack location can be IP42 since it must be removable.
 - Device will create a temperary network to allow user to enter network details
 - reset button will be located on bottom to allow entering a new network
 - contact info
-
-### App Functions
-- Set Alarms that will create a push notifications.
-- View the latest temperature
-- view a previous temperatures (by default store one month of data on phone, but allow user to change)
-- Allow users to submit feedback through app
-- Will not allow behaviour change or control of device.
-
-### Other Control/Interface functions
-Data can be retrieved and ingested into other platforms for use outside of created ecosystem. Can test this by making sure it works with Home Assistant (they have MQTT things).
-
-### Connection and Data Privacy
-- MQTT will be used and secured using standard methods
-- the physical device will be needed to connect to the server (via QR code or similar)
-- MQTT relay server will be made available throughout lifetime at no additional cost (will investigate cost furter)
-  -
 
 ### Warranty
 1 year Warranty
