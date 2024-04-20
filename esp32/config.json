@@ -1,0 +1,8 @@
+{
+    "ssid": "Enter_WiFi_SSID",
+    "ssid_password": "Enter_Wifi_Password",
+    "high_temp": "Enter_High_Limit",
+    "low_temp": "Enter_Low_Temp",
+    "email": "Enter_Email",
+    "alert_interval": "Enter_Alert_Interval"
+}

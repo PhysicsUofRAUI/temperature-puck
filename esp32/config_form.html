@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <h1>Hello, World!</h1>
+        <form>
+            <label for="ssid">SSID:</label>
+            <input type="text" id="ssid" name="ssid" value="Enter_WiFi_SSID"><br>
+            <label for="ssid_password">SSID Password</label>
+            <input type="password" id="ssid_password" name="ssid_password" /><br>
+            <label id="high_temp" name="high_temp">Enter High Temperature limit</label>
+            <input type="text" id="high_temp" name="high_temp"/><br>
+            <label id="low_temp" name="low_temp">Enter Low Temperature Limit</label>
+            <input type="text" id="low_temp" name="low_temp"/><br>
+            <label id="email" name="email">Enter Email</label>
+            <input type="text" id="email" name="email"/><br>
+            <label id="alert_interval" name="alert_interval">Choose Alert Interval</label><br>
+              <input type="radio" id="12_hr" name="alert_interval" value="12_hr">
+              <label for="12_hr">12 Hours</label><br>
+              <input type="radio" id="day" name="alert_interval" value="day">
+              <label for="day">Daily</label><br>
+              <input type="radio" id="week" name="alert_interval" value="week">
+              <label for="week">Weekly</label><br>
+            <input type="submit" value="Submit">
+        </form>
+    </body>
+</html>
