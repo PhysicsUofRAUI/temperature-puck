@@ -1,11 +1,36 @@
 import json
 import network
 import socket
+from microdot import Microdot, send_file
+
+app = Microdot()
 
 # the webpage is currently working
 # need to make the form now.
 with open('config.json') as json_file:
     config_params = json.load(json_file)
+
+@app.route('/', methods=['GET', 'POST'])
+def index(request):
+    if request.method == 'POST':
+        if 'ssid' in request.form:
+            config_params['ssid'] = request.form['ssid']
+        if 'ssid_password' in request.form:
+            config_params['ssid_password'] = request.form['ssid_password']
+        if 'high_temp' in request.form:
+            config_params['high_temp'] = request.form['high_temp']
+        if 'low_temp' in request.form:
+            config_params['low_temp'] = request.form['low_temp']
+        if 'email' in request.form:
+            config_params['email'] = request.form['email']
+        if 'alert_interval' in request.form:
+            config_params['alert_interval'] = request.form['alert_interval']
+
+        # update the json file
+        with open('config.json') as json_file:
+            json.dump(config_params, json_file)
+    else:
+        return send_file('config_form.html')
 
 if config_params['ssid'] == "Enter_WiFi_SSID":
     # Create access point and launch webpage to 
@@ -16,28 +41,8 @@ if config_params['ssid'] == "Enter_WiFi_SSID":
     while ap.active() == False:
         pass
 
-    # need to define this as a form for people to enter the config params
-    def web_page():
-        html = """<html><head><meta name="viewport" content="width=device-width, initial-scale=1"></head>
-        <body><h1>Hello, World!</h1></body></html>"""
-        return html
-    
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind(('', 80))
-    s.listen(5)
+    app.run()
 
-    while True:
-        conn, addr = s.accept()
-        print('Got a connection from %s' % str(addr))
-        conn_file = conn.makefile('rwb', 0)
-        while True:
-            line = conn_file.readline()
-            if not line or line == b'\r\n':
-                break
-        response = web_page()
-        conn.send('HTTP/1.0 200 OK\r\nContent-type: text/html\r\n\r\n')
-        conn.send(response)
-        conn.close()
 else :
     # launch normal operation
     wlan = network.WLAN(network.STA_IF)
@@ -49,5 +54,5 @@ else :
         pass
 
     # need dict with high and low temps
-    
+
     # need function to check temp
