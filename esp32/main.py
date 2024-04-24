@@ -30,8 +30,8 @@ def index(request):
         # not updating correctly (still has some old file in it)
         with open('config.json', 'w') as json_file:
             json.dump(config_params, json_file)
-        # send confirmation webpage
-        # restart after 30s or ask the person to power cycle
+        
+        return send_file('success.html')
     else:
         return send_file('config_form.html')
 
