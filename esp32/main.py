@@ -27,8 +27,11 @@ def index(request):
             config_params['alert_interval'] = request.form['alert_interval']
 
         # update the json file
-        with open('config.json') as json_file:
+        # not updating correctly (still has some old file in it)
+        with open('config.json', 'w') as json_file:
             json.dump(config_params, json_file)
+        # send confirmation webpage
+        # restart after 30s or ask the person to power cycle
     else:
         return send_file('config_form.html')
 
